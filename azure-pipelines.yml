@@ -4,10 +4,10 @@ trigger:
 pool: test
 
 steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '20.x'
-  displayName: 'Install Node.js'
+- script: |
+    node -v
+    npm -v
+  displayName: 'Check Node.js version'
 
 - script: |
     npm config set registry https://registry.npmjs.org/
