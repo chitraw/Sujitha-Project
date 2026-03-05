@@ -4,13 +4,11 @@ trigger:
 pool: test
 
 steps:
-# Check Node.js and npm versions
 - script: |
     node -v
     npm -v
   displayName: 'Check Node.js version'
 
-# Install dependencies and build React app
 - script: |
     npm config set registry https://registry.npmjs.org/
     npm config set strict-ssl false   # optional, only if errors persist
@@ -18,23 +16,13 @@ steps:
     npm run build
   displayName: 'npm install and build'
 
-# Debug: list folders to confirm build output
-- script: |
-    echo "Listing contents of source directory..."
-    dir $(Build.SourcesDirectory)
-    echo "Listing contents of build folder (if exists)..."
-    dir $(Build.SourcesDirectory)/build
-    echo "Listing contents of dist folder (if exists)..."
-    dir $(Build.SourcesDirectory)/dist
-  displayName: 'List folders after build'
-
-# Copy build output (adjust SourceFolder if your app outputs to dist/)
+# Copy everything to artifacts (since no build folder exists)
 - task: CopyFiles@2
   inputs:
-    SourceFolder: '$(Build.SourcesDirectory)/build'
+    SourceFolder: '$(Build.SourcesDirectory)'
     Contents: '**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
-  displayName: 'Copy build output to staging'
+  displayName: 'Copy all files to staging'
 
 # Publish artifacts
 - task: PublishBuildArtifacts@1
