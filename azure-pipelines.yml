@@ -20,7 +20,7 @@ steps:
 # Copy build output (React apps usually build into "build" folder)
 - task: CopyFiles@2
   inputs:
-    SourceFolder: 'build'
+    SourceFolder: '$(Build.SourcesDirectory)/build'
     Contents: '**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
   displayName: 'Copy build output to staging'
