@@ -10,9 +10,12 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
+    npm config set registry https://registry.npmjs.org/
+    npm config set strict-ssl false   # optional, only if errors persist
     npm install
     npm run build
   displayName: 'npm install and build'
+
 
 # Copy build output (React apps usually build into "build" folder)
 - task: CopyFiles@2
